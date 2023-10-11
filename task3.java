@@ -1,4 +1,3 @@
-
 import java.util.Arrays;
 public class task3 {
     public static void main(String[] args){
@@ -9,7 +8,7 @@ public class task3 {
         + one("Even if you did this task not by yourself, you have to understand every single line of code."));
 //Напишите функцию, которая принимает строку и заменяет две идущие подряд буквы по шаблону «Double*».
         System.out.println("\nЗадание 2:");
-        System.out.println("hhelo => " + two("hhelo"));
+        System.out.println("hello => " + two("hello"));
         System.out.println("bookkeeper => " + two("bookkeeper"));
 //Напишите функцию, которая принимает измерения игрушечного блока и возвращает true, если этот блок может поместиться в отверстие.
         System.out.println("\nЗадание 3:");
@@ -28,10 +27,15 @@ public class task3 {
 //Создайте метод, который принимает двумерный массив, и возвращает товары, которые были проданы в каждом из магазинов.
         System.out.println("\nЗадание 6");
         System.out.println("Пример 1 => " 
-        + six(new String[][]{{"Apple", "Shop1", "Shop2", "Shop3", "Shop4"},{"Banana", "Shop2", "Shop3", "Shop4"}, {
-            "Orange", "Shop1", "Shop3", "Shop4"}, {"Pear", "Shop2", "Shop4"}}));
-        System.out.println("Пример 2 => " + six(new String[][]{{"Fridge", "Shop2", "Shop3"},{"Microwave", "Shop1", "Shop2", "Shop3", "Shop4"}, {
-            "Laptop", "Shop3", "Shop4"}, {"Phone", "Shop1", "Shop2", "Shop3", "Shop4"}}));
+        + six(new String[][]{{"Apple", "Shop1", "Shop2", "Shop3", "Shop4"},
+                            {"Banana", "Shop2", "Shop3", "Shop4"}, 
+                            {"Orange", "Shop1", "Shop3", "Shop4"}, 
+                            {"Pear", "Shop2", "Shop4"}}));
+        System.out.println("Пример 2 => " 
+        + six(new String[][]{{"Fridge", "Shop2", "Shop3"},
+                            {"Microwave", "Shop1", "Shop2", "Shop3", "Shop4"}, 
+                            {"Laptop", "Shop3", "Shop4"}, 
+                            {"Phone", "Shop1", "Shop2", "Shop3", "Shop4"}}));
 //Создайте функцию, которая определяет, можно ли разбить заданное предложение на слова так, чтобы каждое слово начиналось с последней буквы предыдущего слова.
         System.out.println("\nЗадание 7");
         System.out.println("\"apple eagle egg goat\" => " + seven("apple eagle egg goat"));
@@ -67,7 +71,8 @@ public class task3 {
     }
 //Задание 1
     public static String one(String text){
-        return text.replaceAll("[aoeiuyAOEIUY]" , "*");
+        text = text.toLowerCase();
+        return text.replaceAll("[aoeiuy]" , "*");
     }
 //Задание 2
     public static String two(String text) {
@@ -98,16 +103,31 @@ public class task3 {
     return (a % 10 == b % 10) || (a % 10 != 0 && b % 10 != 0);
     }
 //Задание 5
-    public static int five(int[] arr){
+    public static int five(int[] arr) {
+        //double x1 = (-b + Math.sqrt(d))/(2*a);
         int a = arr[0];
         int b = arr[1];
         int c = arr[2];
-        if (b*b - 4*a*c > 0){
-            return 2;
-       } else if (b*b - 4*a*c == 0){
-            return 1;
-       }
-    return 0;
+        int d = b*b - 4*a*c;
+        if (d > 0) {
+            double x1 = (-b + Math.sqrt(d))/(2*a);
+            double x2 = (-b - Math.sqrt(d))/(2*a);
+            //System.out.println("x1%: " + x1 % 1);
+            //System.out.println("x2%:  " + x2 % 1);
+            if (x1 % 1 == 0 && x2 % 1 == 0) {
+                return 2;
+            }
+            if (x1 % 1 != 0 && x2 % 1 == 0 || x1 % 1 == 0 && x2 % 1 != 0) {
+                return 1;
+            }
+        }
+        else if (d == 0) {
+            double x3 = (-b + Math.sqrt(d))/(2*a);
+            //System.out.println("x3%: " + x3 % 1);
+            if (x3 % 1 == 0)
+                return 1;
+        }
+        return 0;
     }
 //Задание 6
     public static String six(String[][] arr){
@@ -126,16 +146,14 @@ public class task3 {
     }
 //Задание 7
     public static Boolean seven(String text){
-        int b = 0;
-        String[] arr = text.split(" ");
-        for (int i = 0; i < text.length(); i ++){
-            if (text.charAt(i) == ' '){
-                if (text.charAt(i-1) == text.charAt(i+1)){
-                    b += 1;
-                }
-            }
+        String str = text.replaceAll("\\pP", "");
+        String[] arr = str.split(" ");
+        for (int i = arr.length - 1; i >= 1; i--){
+        char x1 = arr[i].charAt(0);
+        char x2 = arr[i-1].charAt(arr[i-1].length() - 1);
+        return (x1 == x2);
         }
-    return (b+1 == arr.length);
+    return false;
     }
 //Задание 8
     public static Boolean eight(int[] arr){
