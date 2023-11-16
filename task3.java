@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 public class task3 {
     public static void main(String[] args){
 //Создайте функцию, которая принимает строку и заменяет все гласные буквы на символ «*».
@@ -39,7 +41,7 @@ public class task3 {
 //Создайте функцию, которая определяет, можно ли разбить заданное предложение на слова так, чтобы каждое слово начиналось с последней буквы предыдущего слова.
         System.out.println("\nЗадание 7");
         System.out.println("\"apple eagle egg goat\" => " + seven("apple eagle egg goat"));
-        System.out.println("\"cat dog goose fish\" => " + seven("cat dog goose fish"));
+        System.out.println("\"cat tog goose fish\" => " + seven("cat tog goose fish"));
 //Напишите метод, который определяет, является ли заданный массив «волнообразным».
         System.out.println("\nЗадание 8");
         System.out.println("\"1, 2, 3, 4, 5\" => " + eight(new int[] {1, 2, 3, 4, 5}));
@@ -95,12 +97,13 @@ public class task3 {
 //Задание 4
     public static boolean four(int a){
     int b = 0;
+    int c = a;
     while (a != 0) {
         int i = a % 10; 
         b += i*i; 
         a /= 10; 
     }
-    return (a % 10 == b % 10) || (a % 10 != 0 && b % 10 != 0);
+    return (c % 2 == b % 2);
     }
 //Задание 5
     public static int five(int[] arr) {
@@ -131,24 +134,23 @@ public class task3 {
     }
 //Задание 6
     public static String six(String[][] arr){
-    String b = "";
+        Set<String> set = new HashSet<>();
+        System.out.println(arr.length);
         for (int i = 0; i < arr.length; i++){
-            if (b.length() == 0 && arr[i].length == 5){
-                    b = b + (arr[i][0]);
-                    i++;
-                } 
-            else if (b.length() > 0 && arr[i].length == 5){
-                b = b + ", " + (arr[i][0]);
-                i++;
+            for (int j = 1; j < arr[i].length; j++){
+                set.add(arr[i][j]);
             }
         }
-    return b;
+        for (String x : set){
+            System.out.println(x + " ");
+        }
+    return "fs";
     }
 //Задание 7
     public static Boolean seven(String text){
         String str = text.replaceAll("\\pP", "");
         String[] arr = str.split(" ");
-        for (int i = arr.length - 1; i >= 1; i--){
+        for (int i = arr.length - 1; i >= 1;){
         char x1 = arr[i].charAt(0);
         char x2 = arr[i-1].charAt(arr[i-1].length() - 1);
         return (x1 == x2);
@@ -208,10 +210,5 @@ public static int[][] ten(int[][] matrix) {
         matrix[j][j] = average;
     }
     return matrix;
+    }
 }
-
-}
-
-
-
-
