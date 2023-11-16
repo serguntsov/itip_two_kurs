@@ -26,8 +26,8 @@ public class task4 {
 //Напишите функцию, принимающую положительное целое число в строковом формате, не превышающее 1000, и возвращающую его целочисленное представление
         System.out.println("\nЗадание 6:");
         System.out.println("eight => " + six("eight"));
-        System.out.println("eight => " + six("five hundred sixty seven"));
-        System.out.println("eight => " + six("thirty one"));
+        System.out.println("five hundred sixty seven => " + six("five hundred sixty seven"));
+        System.out.println("thirty one => " + six("thirty one"));
 //Напишите функцию, принимающую строку цифр, выполняющую поиск подстроки максимальной длины с уникальными элементами
         System.out.println("\nЗадание 7:");
         System.out.println("123412324 => " + seven("123412324"));
@@ -45,13 +45,13 @@ public class task4 {
             {4, 5, 9}}) + "\n{4, 5, 9}");
 //Создайте функцию, принимающую строку, содержащую числа внутри слов. Эти числа представляют расположение слова для новой строящейся строки
             System.out.println("\nЗадание 9:");
-            System.out.println(nine("t3o the5m 1One all6 r4ule ri2ng"));
-            System.out.println(nine("re6sponsibility Wit1h gr5eat power3 4comes g2reat"));
+            System.out.println("t3o the5m 1One all6 r4ule ri2ng => " + nine("t3o the5m 1One all6 r4ule ri2ng"));
+            System.out.println("re6sponsibility Wit1h gr5eat power3 4comes g2reat => " + nine("re6sponsibility Wit1h gr5eat power3 4comes g2reat"));
 //Напишите функцию, принимающую два числа, которая делает второе число максимально возможным за счет замены своих элементов элементами первого числа
             System.out.println("\nЗадание 10:");
-            System.out.println(switchNums(519, 723));
-            System.out.println(switchNums(491, 3912));
-            System.out.println(switchNums(6274, 71259));
+            System.out.println("519, 723 => " + switchNums(519, 723));
+            System.out.println("491, 3912 => " + switchNums(491, 3912));
+            System.out.println("6274, 71259 => " + switchNums(6274, 71259));
     }
 //Задание 1
     public static String one(String text){
@@ -91,11 +91,10 @@ public class task4 {
             combinations.add(combination);
             return;
         }
-        // Проверяем, можно ли добавить 0 к текущей комбинации
+        //Заканчивается ли на 0
         if (!combination.endsWith("0")) {
             backtrack(combination + "0", n, combinations);
         }
-        // Всегда можно добавить 1
         backtrack(combination + "1", n, combinations);
     }
 //Задание 4
@@ -115,7 +114,11 @@ public class task4 {
         return updateLongestString(longestStr, currentStr);
     }
     private static String updateLongestString(String currentLongest, StringBuilder currentStr) {
-        return currentStr.length() > currentLongest.length() ? currentStr.toString() : currentLongest;
+        if (currentStr.length() > currentLongest.length()) {
+            return currentStr.toString();
+        } else {
+            return currentLongest;
+        }
     }
 //Задание 5
     public static String five(String str) {
@@ -178,7 +181,7 @@ public static int six(String str) {
         int current = 0;
         for (String word : words) {
             int value = map.get(word);
-            if (value == 100) {
+            if (value == 100 && current != 0) {
                 current = current * value;
             } else {
                 current += value;
