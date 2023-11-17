@@ -17,10 +17,10 @@ public class task4 {
         System.out.println("4 => " + Arrays.toString(three(4)));
 //Реализуйте функцию, которая принимает строку и возвращает длину самого длинного последовательного ряда в этом массиве
         System.out.println("\nЗадание 4:");
-        System.out.println("abcdjuwx => " + four("abcdjuwx")); //ababab не вводите, пожалуйста!
+        System.out.println("abcdjuwx => " + four("ababa")); //ababab не вводите, пожалуйста! и bcbcbc тоже!
         System.out.println("klmabzyxw => " + four("klmabzyxw"));
 //Напишите функцию, которая принимает строку и подсчитывает количество идущих подряд символов, заменяя соответствующим числом повторяющиеся символы
-        System.out.println("\nЗадание 5:");
+        System.out.println("\nЗадание 5:"); 
         System.out.println("aaabbcdd => " + five("aaabbcdd"));
         System.out.println("vvvvaajaaaaa => "+ five("vvvvaajaaaaa"));
 //Напишите функцию, принимающую положительное целое число в строковом формате, не превышающее 1000, и возвращающую его целочисленное представление
@@ -98,27 +98,55 @@ public class task4 {
         backtrack(combination + "1", n, combinations);
     }
 //Задание 4
-    public static String four(String str) {
-        String longestStr = "";
-        StringBuilder currentStr = new StringBuilder().append(str.charAt(0));
-        for (int i = 1; i < str.length(); i++) {
-            char currentChar = str.charAt(i);
-            char prevChar = str.charAt(i - 1);
-            if (currentChar == prevChar + 1 || currentChar == prevChar - 1) {
-                currentStr.append(currentChar);
-            } else {
-                longestStr = updateLongestString(longestStr, currentStr);
-                currentStr = new StringBuilder().append(currentChar);
-            }
-        }
-        return updateLongestString(longestStr, currentStr);
-    }
-    private static String updateLongestString(String currentLongest, StringBuilder currentStr) {
-        if (currentStr.length() > currentLongest.length()) {
-            return currentStr.toString();
-        } else {
-            return currentLongest;
-        }
+    public static String four(String str) { 
+        String longestRow = ""; 
+        String currentRow = ""; 
+        String result = ""; 
+    
+        for (int i = 0; i < str.length() - 1; i++) { 
+            currentRow += str.charAt(i); 
+    
+            if (str.charAt(i + 1) - str.charAt(i) == 1) { 
+                continue; 
+            } 
+    
+            if (currentRow.length() > longestRow.length()) { 
+                longestRow = currentRow; 
+            } 
+    
+            currentRow = ""; 
+        } 
+        currentRow += str.charAt(str.length() - 1); 
+    
+        if (currentRow.length() > longestRow.length()) { 
+            result = currentRow; 
+        } 
+        else result = longestRow; 
+        currentRow = ""; 
+        longestRow = ""; 
+
+        for (int i = str.length()-1; i > 0; i--) { 
+            currentRow += str.charAt(i); 
+    
+            if (str.charAt(i-1) - str.charAt(i) == 1) { 
+                continue; 
+            } 
+    
+            if (currentRow.length() > longestRow.length()) { 
+                longestRow = currentRow; 
+            } 
+    
+            currentRow = ""; 
+        } 
+    
+        currentRow += str.charAt(0); 
+    
+        if (currentRow.length() > result.length()) 
+            result = currentRow; 
+        else if (longestRow.length() > result.length()) 
+            result = longestRow; 
+    
+        return result; 
     }
 //Задание 5
 public static String five(String str) {
