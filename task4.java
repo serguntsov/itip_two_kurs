@@ -211,20 +211,20 @@ public static int six(String str) {
 //Задание 8
     public static int eight(int[][] matrix) {
         int n = matrix.length;
-        int[][] dp = new int[n][n];
+        int[][] cursor = new int[n][n];
         // Инициализация первой строки и первого столбца
-        dp[0][0] = matrix[0][0];
+        cursor[0][0] = matrix[0][0];
         for (int i = 1; i < n; i++) {
-            dp[i][0] = dp[i - 1][0] + matrix[i][0];
-            dp[0][i] = dp[0][i - 1] + matrix[0][i];
+            cursor[i][0] = cursor[i - 1][0] + matrix[i][0];
+            cursor[0][i] = cursor[0][i - 1] + matrix[0][i];
         }
         // Нахождение наименьшего пути для остальных ячеек
         for (int i = 1; i < n; i++) {
             for (int j = 1; j < n; j++) {
-                dp[i][j] = matrix[i][j] + Math.min(dp[i - 1][j], dp[i][j - 1]);
+                cursor[i][j] = matrix[i][j] + Math.min(cursor[i - 1][j], cursor[i][j - 1]);
             }
         }
-        return dp[n - 1][n - 1];
+        return cursor[n - 1][n - 1];
     }
 //Задание 9
 public static String nine(String s) {
