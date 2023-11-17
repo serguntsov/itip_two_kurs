@@ -122,63 +122,72 @@ public class task4 {
         }
     }
 //Задание 5
-public static String five(String str) {
-    StringBuilder compresed_str = new StringBuilder();
-    char c = str.charAt(0);
-    int count = 1;
-    for (int i = 1; i < str.length(); i++) {
-        if (str.charAt(i) == c) {
-            count++;
-        } else {
-            compresed_str.append(c).append(count);
-            c = str.charAt(i);
-            count = 1;
-        }
-    }
-    compresed_str.append(c).append(count);
-    return compresed_str.toString();
-}
-//Задание 6
-public static int six(String str) {
-    Map<String, Integer> map = new HashMap<>();
-    map.put("one", 1);
-    map.put("two", 2);
-    map.put("three", 3);
-    map.put("four", 4);
-    map.put("five", 5);
-    map.put("six", 6);
-    map.put("seven", 7);
-    map.put("eight", 8);
-    map.put("nine", 9);
-    map.put("ten", 10);
-    map.put("eleven", 11);
-    map.put("twelve", 12);
-    map.put("thirteen", 13);
-    map.put("fourteen", 14);
-    map.put("fifteen", 15);
-    map.put("sixteen", 16);
-    map.put("seventeen", 17);
-    map.put("eighteen", 18);
-    map.put("nineteen", 19);
-    map.put("twenty", 20);
-    map.put("thirty", 30);
-    map.put("forty", 40);
-    map.put("fifty", 50);
-    map.put("sixty", 60);
-    map.put("seventy", 70);
-    map.put("eighty", 80);
-    map.put("ninety", 90);
-    map.put("hundred", 100);
-    String[] words = str.split(" ");
-        int current = 0;
-        for (String word : words) {
-            int value = map.get(word);
-            if (value == 100 && current != 0) {
-                current = current * value;
+    public static String five(String string) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (char ch : string.toCharArray()) {
+            if (map.containsKey(ch)) {
+                map.put(ch, map.get(ch) + 1);
             } else {
-                current += value;
+                map.put(ch, 1);
             }
         }
+        StringBuilder res = new StringBuilder();
+        List<Integer> values = new ArrayList<>(map.values());
+        Collections.sort(values);
+        while (!values.isEmpty() && !map.isEmpty()) {
+            for (Character key : map.keySet()) {
+                if (map.get(key).equals(values.get(0))) {
+                    res.append(key);
+                    res.append(values.get(0));
+                    map.remove(key);
+                    values.remove(0);
+                    break;
+                }
+            }
+        }
+        return res.toString();
+    }
+//Задание 6
+    public static int six(String str) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("one", 1);
+        map.put("two", 2);
+        map.put("three", 3);
+        map.put("four", 4);
+        map.put("five", 5);
+        map.put("six", 6);
+        map.put("seven", 7);
+        map.put("eight", 8);
+        map.put("nine", 9);
+        map.put("ten", 10);
+        map.put("eleven", 11);
+        map.put("twelve", 12);
+        map.put("thirteen", 13);
+        map.put("fourteen", 14);
+        map.put("fifteen", 15);
+        map.put("sixteen", 16);
+        map.put("seventeen", 17);
+        map.put("eighteen", 18);
+        map.put("nineteen", 19);
+        map.put("twenty", 20);
+        map.put("thirty", 30);
+        map.put("forty", 40);
+        map.put("fifty", 50);
+        map.put("sixty", 60);
+        map.put("seventy", 70);
+        map.put("eighty", 80);
+        map.put("ninety", 90);
+        map.put("hundred", 100);
+        String[] words = str.split(" ");
+            int current = 0;
+            for (String word : words) {
+                int value = map.get(word);
+                if (value == 100 && current != 0) {
+                    current = current * value;
+                } else {
+                    current += value;
+                }
+            }
         return current;
     }
 //Задание 7
