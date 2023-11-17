@@ -17,7 +17,7 @@ public class task4 {
         System.out.println("4 => " + Arrays.toString(three(4)));
 //Реализуйте функцию, которая принимает строку и возвращает длину самого длинного последовательного ряда в этом массиве
         System.out.println("\nЗадание 4:");
-        System.out.println("abcdjuwx => " + four("abcdjuwx"));
+        System.out.println("abcdjuwx => " + four("abcdjuwx")); //ababab не вводите, пожалуйста!
         System.out.println("klmabzyxw => " + four("klmabzyxw"));
 //Напишите функцию, которая принимает строку и подсчитывает количество идущих подряд символов, заменяя соответствующим числом повторяющиеся символы
         System.out.println("\nЗадание 5:");
@@ -121,31 +121,22 @@ public class task4 {
         }
     }
 //Задание 5
-    public static String five(String str) {
-        Map<Character, Integer> map = new HashMap<>();
-        for (char ch : str.toCharArray()) {
-            if (map.containsKey(ch)) {
-                map.put(ch, map.get(ch) + 1);
-            } else {
-                map.put(ch, 1);
-            }
+public static String five(String str) {
+    StringBuilder compresed_str = new StringBuilder();
+    char c = str.charAt(0);
+    int count = 1;
+    for (int i = 1; i < str.length(); i++) {
+        if (str.charAt(i) == c) {
+            count++;
+        } else {
+            compresed_str.append(c).append(count);
+            c = str.charAt(i);
+            count = 1;
         }
-        StringBuilder res = new StringBuilder();
-        List<Integer> values = new ArrayList<>(map.values());
-        Collections.sort(values);
-        while (!values.isEmpty() && !map.isEmpty()) {
-            for (Character key : map.keySet()) {
-                if (map.get(key).equals(values.get(0))) {
-                    res.append(key);
-                    res.append(values.get(0));
-                    map.remove(key);
-                    values.remove(0);
-                    break;
-                }
-            }
-        }
-        return res.toString();
     }
+    compresed_str.append(c).append(count);
+    return compresed_str.toString();
+}
 //Задание 6
 public static int six(String str) {
     Map<String, Integer> map = new HashMap<>();
