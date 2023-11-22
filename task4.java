@@ -98,55 +98,66 @@ public class task4 {
         backtrack(combination + "1", n, combinations);
     }
 //Задание 4
-    public static String four(String str) {
-        String longestStr = "";
-        StringBuilder currentStr = new StringBuilder().append(str.charAt(0));
-        for (int i = 1; i < str.length(); i++) {
-            char currentChar = str.charAt(i);
-            char prevChar = str.charAt(i - 1);
-            if (currentChar == prevChar + 1 || currentChar == prevChar - 1) {
-                currentStr.append(currentChar);
-            } else {
-                longestStr = updateLongestString(longestStr, currentStr);
-                currentStr = new StringBuilder().append(currentChar);
-            }
-        }
-        return updateLongestString(longestStr, currentStr);
+public static String four(String str) {
+    if (str == null || str.length() == 0) {
+        return "";
     }
-    private static String updateLongestString(String currentLongest, StringBuilder currentStr) {
-        if (currentStr.length() > currentLongest.length()) {
-            for (int i = 0; i < currentStr.length(); i++){}
-            return currentStr.toString();
+    String longestRow = "";
+    String currentRow = "" + str.charAt(0);
+    for (int i = 1; i < str.length(); i++) {
+        char currentChar = str.charAt(i);
+        char previousChar = str.charAt(i - 1);
+        
+        if (currentChar == previousChar + 1 || currentChar == previousChar - 1) {
+            if (currentRow.indexOf(currentChar) == -1) {
+            currentRow += currentChar;
+            }
         } else {
-            return currentLongest;
+            if (currentRow.length() > longestRow.length()) {
+                longestRow = currentRow;
+            }
+            currentRow = "" + currentChar;
+        }
+        if (currentRow.length() > longestRow.length()) {
+        longestRow = currentRow;
+    }
+    }     
+    // Удаляем повторяющиеся символы из самого длинного ряда
+    String uniqueLongestRow = "";
+    for (int i = 0; i < longestRow.length(); i++) {
+        char currentChar = longestRow.charAt(i);
+        if (uniqueLongestRow.indexOf(currentChar) == -1) {
+            uniqueLongestRow += currentChar;
         }
     }
+    return uniqueLongestRow;
+}
 //Задание 5
-    public static String five(String string) {
-        Map<Character, Integer> map = new HashMap<>();
-        for (char ch : string.toCharArray()) {
-            if (map.containsKey(ch)) {
-                map.put(ch, map.get(ch) + 1);
-            } else {
-                map.put(ch, 1);
-            }
+public static String five(String string) {
+    Map<Character, Integer> map = new HashMap<>();
+    for (char ch : string.toCharArray()) {
+        if (map.containsKey(ch)) {
+            map.put(ch, map.get(ch) + 1);
+        } else {
+            map.put(ch, 1);
         }
-        StringBuilder res = new StringBuilder();
-        List<Integer> values = new ArrayList<>(map.values());
-        Collections.sort(values);
-        while (!values.isEmpty() && !map.isEmpty()) {
-            for (Character key : map.keySet()) {
-                if (map.get(key).equals(values.get(0))) {
-                    res.append(key);
-                    res.append(values.get(0));
-                    map.remove(key);
-                    values.remove(0);
-                    break;
-                }
-            }
-        }
-        return res.toString();
     }
+    StringBuilder res = new StringBuilder();
+    List<Integer> values = new ArrayList<>(map.values());
+    Collections.sort(values);
+    while (!values.isEmpty() && !map.isEmpty()) {
+        for (Character key : map.keySet()) {
+            if (map.get(key).equals(values.get(0))) {
+                res.append(key);
+                res.append(values.get(0));
+                map.remove(key);
+                values.remove(0);
+                break;
+            }
+        }
+    }
+    return res.toString();
+}
 //Задание 6
     public static int six(String str) {
         Map<String, Integer> map = new HashMap<>();
