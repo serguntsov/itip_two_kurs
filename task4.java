@@ -99,7 +99,7 @@ public class task4 {
     }
 //Задание 4
 public static String four(String str) {
-    if (str == null || str.length() == 0) {
+    if (str.length() == 0) {
         return "";
     }
     String longestRow = "";
@@ -133,33 +133,44 @@ public static String four(String str) {
     return uniqueLongestRow;
 }
 //Задание 5
-public static String five(String string) {
-    Map<Character, Integer> map = new HashMap<>();
-    for (char ch : string.toCharArray()) {
-        if (map.containsKey(ch)) {
-            map.put(ch, map.get(ch) + 1);
-        } else {
-            map.put(ch, 1);
-        }
-    }
+public static StringBuilder five(String str) { 
     StringBuilder res = new StringBuilder();
-    List<Integer> values = new ArrayList<>(map.values());
-    Collections.sort(values);
-    while (!values.isEmpty() && !map.isEmpty()) {
-        for (Character key : map.keySet()) {
-            if (map.get(key).equals(values.get(0))) {
-                res.append(key);
-                res.append(values.get(0));
-                map.remove(key);
-                values.remove(0);
+    ArrayList<String> letters = new ArrayList<>();
+    for (int i = 0; i < str.length() - 1; i++) {
+        int maxLength = 1;
+        int currentLength = 1;
+        for (int j = i + 1; j < str.length(); j++) {
+            if (str.charAt(i) != str.charAt(j)) {
                 break;
             }
+            currentLength++;
+            maxLength = Math.max(maxLength, currentLength);
         }
+        if (letters.size() >= 1 && letters.get(letters.size() - 1).charAt(0) == str.charAt(i)) {
+            continue;
+        }
+        letters.add(String.valueOf(str.charAt(i)) + String.valueOf(maxLength));
     }
-    return res.toString();
+    for (int i = 0; i < letters.size(); i++) {
+        String min = letters.get(i);
+        int minId = i;
+        for (int j = i + 1; j < letters.size(); j++) {
+            if (Integer.parseInt(letters.get(j).substring(1)) < Integer.parseInt(min.substring(1))) {
+                min = letters.get(j);
+                minId = j;
+            }
+        }
+        String temp = letters.get(i);
+        letters.set(i, min);
+        letters.set(minId, temp);
+    }
+    for (int i = 0; i < letters.size(); i++) {
+        res.append(letters.get(i));
+    }
+    return res;
 }
 //Задание 6
-    public static int six(String str) {
+    public static int six(String str){
         Map<String, Integer> map = new HashMap<>();
         map.put("one", 1);
         map.put("two", 2);
@@ -193,7 +204,7 @@ public static String five(String string) {
             int current = 0;
             for (String word : words) {
                 int value = map.get(word);
-                if (value == 100 && current != 0) {
+                if (value == 100 && current != 0){
                     current = current * value;
                 } else {
                     current += value;
