@@ -55,7 +55,7 @@ public class task4 {
     }
 //Задание 1
     public static String one(String text){
-       if (text == null || text.length() == 1) {
+       if (text.length() <= 1) {
         return text;
         }
         String restOfString = one(text.substring(1));
@@ -120,17 +120,10 @@ public static String four(String str) {
         }
         if (currentRow.length() > longestRow.length()) {
         longestRow = currentRow;
+
     }
-    }     
-    // Удаляем повторяющиеся символы из самого длинного ряда
-    String uniqueLongestRow = "";
-    for (int i = 0; i < longestRow.length(); i++) {
-        char currentChar = longestRow.charAt(i);
-        if (uniqueLongestRow.indexOf(currentChar) == -1) {
-            uniqueLongestRow += currentChar;
-        }
-    }
-    return uniqueLongestRow;
+    }    
+    return longestRow;
 }
 //Задание 5
 public static StringBuilder five(String str) { 
